@@ -1,24 +1,26 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-<div ng-app="sidenavDemo2">
-    <div ng-controller="AppCtrl" layout="column" style="height: 500px;" ng-cloak>
+<div ng-app="sidenavDemo1">
+    <div ng-controller="AppCtrl" layout="column" style="height:500px;" ng-cloak>
 
         <section layout="row" flex>
 
-            <md-sidenav class="md-sidenav-left" md-component-id="left"
-                        md-disable-backdrop md-whiteframe="4">
+            <md-sidenav class="md-sidenav-left"
+                        md-component-id="left"
+                        md-is-locked-open="$mdMedia('gt-md')"
+                        md-whiteframe="4">
 
                 <md-toolbar class="md-theme-indigo">
-                    <h1 class="md-toolbar-tools">Disabled Backdrop</h1>
+                    <img width="40%" height="40%" src="https://www.dominospizza.es/images/hawaiana_plus.png" />
+                    <h1 class="md-toolbar-tools">Pizzeria</h1>
                 </md-toolbar>
-
-                <md-content layout-margin>
-                    <p>
-                        This sidenav is not showing any backdrop, where users can click on it, to close the sidenav.
-                    </p>
-                    <md-button ng-click="toggleLeft()" class="md-accent">
-                        Close this Sidenav
+                <md-content layout-padding ng-controller="LeftCtrl">
+                    <md-button class="md-raised md-primary">Primary</md-button><br /><br />
+                    <md-button class="md-raised md-primary">Primary</md-button><br /><br />
+                    <md-button class="md-raised md-primary">Primary</md-button><br />
+                    <md-button ng-click="close()" class="md-primary" hide-gt-md>
+                        Close Sidenav Left
                     </md-button>
                 </md-content>
 
@@ -27,18 +29,32 @@
             <md-content flex layout-padding>
 
                 <div layout="column" layout-align="top center">
-                    <p>
-                        Developers can also disable the backdrop of the sidenav.<br />
-                        This will disable the functionality to click outside to close the sidenav.
-                    </p>
-
-                    <div>
-                        <md-button ng-click="toggleLeft()" class="md-raised">
-                            Toggle Sidenav
-                        </md-button>
+                    <div flex-xs flex-gt-xs="50" layout="column">
+                        <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline">Card with image</span>
+                                    <span class="md-subhead">Large</span>
+                                </md-card-title-text>
+                                <md-card-title-media>
+                                    <div class="md-media-lg card-media"></div>
+                                </md-card-title-media>
+                            </md-card-title>
+                            <md-card-actions layout="row" layout-align="end center">
+                                <md-button>Action 1</md-button>
+                                <md-button>Action 2</md-button>
+                            </md-card-actions>
+                        </md-card>
+                        </div>
+                        <div>
+                            <md-button ng-click="toggleLeft()"
+                                       class="md-primary" hide-gt-md>
+                                Toggle left
+                            </md-button>
+                        </div>
                     </div>
 
-                </div>
+                <div flex></div>
 
             </md-content>
 
@@ -48,16 +64,69 @@
 </div>
 @section scripts{
     <script>
-        angular.module('sidenavDemo2', ['ngMaterial']).controller('AppCtrl', function ($scope, $timeout, $mdSidenav) {
-            $scope.toggleLeft = buildToggler('left');
-            $scope.toggleRight = buildToggler('right');
-
-            function buildToggler(componentId) {
-                return function () {
-                    $mdSidenav(componentId).toggle();
+        angular
+            .module('sidenavDemo1', ['ngMaterial'])
+            .controller('AppCtrl', function ($scope, $timeout, $mdSidenav, $log) {
+                $scope.toggleLeft = buildDelayedToggler('left');
+                $scope.toggleRight = buildToggler('right');
+                $scope.isOpenRight = function () {
+                    return $mdSidenav('right').isOpen();
                 };
-            }
-        });
+
+                /**
+                 * Supplies a function that will continue to operate until the
+                 * time is up.
+                 */
+                function debounce(func, wait, context) {
+                    var timer;
+
+                    return function debounced() {
+                        var context = $scope,
+                            args = Array.prototype.slice.call(arguments);
+                        $timeout.cancel(timer);
+                        timer = $timeout(function () {
+                            timer = undefined;
+                            func.apply(context, args);
+                        }, wait || 10);
+                    };
+                }
+
+                /**
+                 * Build handler to open/close a SideNav; when animation finishes
+                 * report completion in console
+                 */
+                function buildDelayedToggler(navID) {
+                    return debounce(function () {
+                        // Component lookup should always be available since we are not using `ng-if`
+                        $mdSidenav(navID)
+                            .toggle()
+                            .then(function () {
+                                $log.debug("toggle " + navID + " is done");
+                            });
+                    }, 200);
+                }
+
+                function buildToggler(navID) {
+                    return function () {
+                        // Component lookup should always be available since we are not using `ng-if`
+                        $mdSidenav(navID)
+                            .toggle()
+                            .then(function () {
+                                $log.debug("toggle " + navID + " is done");
+                            });
+                    };
+                }
+            })
+            .controller('LeftCtrl', function ($scope, $timeout, $mdSidenav, $log) {
+                $scope.close = function () {
+                    // Component lookup should always be available since we are not using `ng-if`
+                    $mdSidenav('left').close()
+                        .then(function () {
+                            $log.debug("close LEFT is done");
+                        });
+
+                };
+            });
 </script>
     }
     
