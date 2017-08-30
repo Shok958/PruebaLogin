@@ -1,102 +1,63 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<div ng-app="sidenavDemo2">
+    <div ng-controller="AppCtrl" layout="column" style="height: 500px;" ng-cloak>
 
-<body ng-app>
-    <div ng-controller="AppCtrl" ng-cloak>
-        <md-content class="md-padding" layout-xs="column" layout="row">
-            <div flex-xs flex-gt-xs="50" layout="column">
-                <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
-                    <md-card-title>
-                        <md-card-title-text>
-                            <span class="md-headline">Card with image</span>
-                            <span class="md-subhead">Large</span>
-                        </md-card-title-text>
-                        <md-card-title-media>
-                            <div class="md-media-lg card-media"></div>
-                        </md-card-title-media>
-                    </md-card-title>
-                    <md-card-actions layout="row" layout-align="end center">
-                        <md-button>Action 1</md-button>
-                        <md-button>Action 2</md-button>
-                    </md-card-actions>
-                </md-card>
-                <md-card md-theme="{{ showDarkTheme ? 'dark-orange' : 'default' }}" md-theme-watch>
-                    <md-card-title>
-                        <md-card-title-text>
-                            <span class="md-headline">Card with image</span>
-                            <span class="md-subhead">Extra Large</span>
-                        </md-card-title-text>
-                    </md-card-title>
-                    <md-card-content layout="row" layout-align="space-between">
-                        <div class="md-media-xl card-media"></div>
+        <section layout="row" flex>
 
-                        <md-card-actions layout="column">
-                            <md-button class="md-icon-button" aria-label="Favorite">
-                                <md-icon md-svg-icon="img/icons/favorite.svg"></md-icon>
-                            </md-button>
-                            <md-button class="md-icon-button" aria-label="Settings">
-                                <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
-                            </md-button>
-                            <md-button class="md-icon-button" aria-label="Share">
-                                <md-icon md-svg-icon="img/icons/share-arrow.svg"></md-icon>
-                            </md-button>
-                        </md-card-actions>
-                    </md-card-content>
-                </md-card>
-            </div>
-            <div flex-xs flex-gt-xs="50" layout="column">
-                <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
-                    <md-card-title>
-                        <md-card-title-text>
-                            <span class="md-headline">Card with image</span>
-                            <span class="md-subhead">Small</span>
-                        </md-card-title-text>
-                        <md-card-title-media>
-                            <div class="md-media-sm card-media"></div>
-                        </md-card-title-media>
-                    </md-card-title>
-                    <md-card-actions layout="row" layout-align="end center">
-                        <md-button>Action 1</md-button>
-                        <md-button>Action 2</md-button>
-                    </md-card-actions>
-                </md-card>
-                <md-card md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}" md-theme-watch>
-                    <md-card-title>
-                        <md-card-title-text>
-                            <span class="md-headline">Card with image</span>
-                            <span class="md-subhead">Medium</span>
-                        </md-card-title-text>
-                        <md-card-title-media>
-                            <div class="md-media-md card-media"></div>
-                        </md-card-title-media>
-                    </md-card-title>
-                    <md-card-actions layout="row" layout-align="end center">
-                        <md-button>Action 1</md-button>
-                        <md-button>Action 2</md-button>
-                    </md-card-actions>
-                </md-card>
-                <div layout layout-padding layout-align="center end" style="height:200px">
-                    <md-checkbox ng-model="showDarkTheme">Use 'Dark' Themed Cards</md-checkbox>
+            <md-sidenav class="md-sidenav-left" md-component-id="left"
+                        md-disable-backdrop md-whiteframe="4">
+
+                <md-toolbar class="md-theme-indigo">
+                    <h1 class="md-toolbar-tools">Disabled Backdrop</h1>
+                </md-toolbar>
+
+                <md-content layout-margin>
+                    <p>
+                        This sidenav is not showing any backdrop, where users can click on it, to close the sidenav.
+                    </p>
+                    <md-button ng-click="toggleLeft()" class="md-accent">
+                        Close this Sidenav
+                    </md-button>
+                </md-content>
+
+            </md-sidenav>
+
+            <md-content flex layout-padding>
+
+                <div layout="column" layout-align="top center">
+                    <p>
+                        Developers can also disable the backdrop of the sidenav.<br />
+                        This will disable the functionality to click outside to close the sidenav.
+                    </p>
+
+                    <div>
+                        <md-button ng-click="toggleLeft()" class="md-raised">
+                            Toggle Sidenav
+                        </md-button>
+                    </div>
+
                 </div>
-            </div>
-        </md-content>
-    </div>
-    <script>
-        angular.module('cardDemo1', ['ngMaterial'])
 
-            .controller('AppCtrl', function ($scope) {
-                $scope.imagePath = 'img/washedout.png';
-            })
-            .config(function ($mdThemingProvider) {
-                $mdThemingProvider.theme('dark-grey').backgroundPalette('grey').dark();
-                $mdThemingProvider.theme('dark-orange').backgroundPalette('orange').dark();
-                $mdThemingProvider.theme('dark-purple').backgroundPalette('deep-purple').dark();
-                $mdThemingProvider.theme('dark-blue').backgroundPalette('blue').dark();
-            });
-    </script>
-    <style>
-        .carddemoBasicUsage .card-media {
-  background-color: #999999; }
-    </style>
-</body>
+            </md-content>
+
+        </section>
+
+    </div>
+</div>
+@section scripts{
+    <script>
+        angular.module('sidenavDemo2', ['ngMaterial']).controller('AppCtrl', function ($scope, $timeout, $mdSidenav) {
+            $scope.toggleLeft = buildToggler('left');
+            $scope.toggleRight = buildToggler('right');
+
+            function buildToggler(componentId) {
+                return function () {
+                    $mdSidenav(componentId).toggle();
+                };
+            }
+        });
+</script>
+    }
+    
