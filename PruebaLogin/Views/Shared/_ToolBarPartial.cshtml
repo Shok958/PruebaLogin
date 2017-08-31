@@ -5,33 +5,12 @@
     <div layout="column" layout-fill>
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2 md-truncate flex>@Html.ActionLink("Nombre de aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</h2>
-                <md-button flex md-truncate>
+                <h2 md-truncate flex>@Html.ActionLink("Pizzeria", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</h2>
+                <md-button>
                     @Html.ActionLink("Inicio", "Index", "Home")
                 </md-button>
-                <md-button>
                     @Html.Partial("_LoginPartial")
-                </md-button>
             </div>
         </md-toolbar>
     </div>
-    @*<md-toolbar>
-        <div class="md-toolbar-tools">
-            <md-button>
-                @Html.ActionLink("Nombre de aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </md-button>
-            <span flex></span>
-            <md-button>
-                @Html.ActionLink("Inicio", "Index", "Home")
-            </md-button>
-            <md-button>
-                @Html.ActionLink("Acerca de", "About", "Home")
-            </md-button>
-            <md-button>
-                @Html.ActionLink("Contacto", "Contact", "Home")
-            </md-button>
-            <md-toolbar-item>
-                @Html.Partial("_LoginPartial")
-            </md-toolbar-item>
-        </div>*@
 </div>

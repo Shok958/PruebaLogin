@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    <title>@ViewBag.Title Pizzeria</title>
     <link href="~/Content/angular-material/angular-material.min.css" rel="stylesheet" />
     <style>
         .toolbardemoBasicUsage md-toolbar md-icon.md-default-theme {
@@ -16,7 +16,7 @@
         }
     </style>
 </head>
-<body layout="row">
+<body layout="row" ng-app="cuerpo">
     <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2 hide-print md-closed ng-isolate-scope _md md-locked-open" md-component-id="left" hide-print="" md-is-locked-open="$mdMedia('gt-sm')" tabindex="-1">
         @Html.Partial("_LogoPartial")
         @Html.Partial("_SideBarPartial")
@@ -25,35 +25,6 @@
         @Html.Partial("_ToolBarPartial")
         @RenderBody()
     </div>
-        @*<div ng-app="navBarDemoBasicUsage">
-                <md-toolbar>
-                    <div class="md-toolbar-tools">
-                        <md-button>
-                            @Html.ActionLink("Nombre de aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                        </md-button>
-                        <span flex></span>
-                        <md-button>
-                            @Html.ActionLink("Inicio", "Index", "Home")
-                        </md-button>
-                        <md-button>
-                            @Html.ActionLink("Acerca de", "About", "Home")
-                        </md-button>
-                        <md-button>
-                            @Html.ActionLink("Contacto", "Contact", "Home")
-                        </md-button>
-                        <md-toolbar-item>
-                            @Html.Partial("_LoginPartial")
-                        </md-toolbar-item>
-                    </div>
-            </div>
-                <div class="container body-content">
-                    @RenderBody()
-                    <hr />
-                    <footer>
-                        <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
-                    </footer>
-                </div>*@
-
         <!-- Angular Material requires Angular.js Libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
@@ -61,11 +32,11 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
         <!-- Angular Material Library -->
         <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.1/angular-material-icons.min.js"></script> 
         @RenderSection("scripts", required: false)
 
         <script>
-            angular.module('navBarDemoBasicUsage', ['ngMaterial']);
-            angular.module('listdemoBasicUsage', ['ngMaterial']);
+            angular.module('cuerpo', ['ngMaterial']);
             </script>
 </body>
 
