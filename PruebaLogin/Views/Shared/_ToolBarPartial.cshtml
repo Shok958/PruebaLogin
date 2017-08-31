@@ -2,7 +2,20 @@
     ViewBag.Title = "Toolbar";
 }
 <div ng-app="navBarDemoBasicUsage">
-    <md-toolbar>
+    <div layout="column" layout-fill>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 md-truncate flex>@Html.ActionLink("Nombre de aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</h2>
+                <md-button flex md-truncate>
+                    @Html.ActionLink("Inicio", "Index", "Home")
+                </md-button>
+                <md-button>
+                    @Html.Partial("_LoginPartial")
+                </md-button>
+            </div>
+        </md-toolbar>
+    </div>
+    @*<md-toolbar>
         <div class="md-toolbar-tools">
             <md-button>
                 @Html.ActionLink("Nombre de aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
@@ -20,5 +33,5 @@
             <md-toolbar-item>
                 @Html.Partial("_LoginPartial")
             </md-toolbar-item>
-        </div>
+        </div>*@
 </div>
